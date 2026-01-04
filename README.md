@@ -186,4 +186,37 @@ This is a **documented and non-fatal warning**.
 
 ---
 
+🎥 Reference & Credits
 
+This project was inspired by and initially guided through a demo tutorial by Krish Naik, a well-known Data Scientist and ML educator.
+
+YouTube Channel: Krish Naik
+
+Reference Video:
+https://www.youtube.com/watch?v=Gs15V79cauo
+
+Note
+
+The original tutorial used:
+
+Boston Housing Dataset
+
+Heroku & Docker-based deployment
+
+Due to:
+
+Deprecation of the Boston dataset
+
+Heroku’s paid-only policy
+
+Platform and OS constraints
+
+the implementation was adapted and modernized using:
+
+California Housing Dataset
+
+Render Cloud Platform
+
+Direct GitHub integration (without Docker)
+
+The core learning objectives and ML workflow remain the same, while ensuring compatibility with current tools and libraries.
