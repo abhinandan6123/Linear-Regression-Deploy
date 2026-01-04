@@ -13,19 +13,40 @@ def home():
 
 @app.route("/predict", methods=["POST"])
 def predict():
-    bedrooms = float(request.form["bedrooms"])
-    kitchens = float(request.form["kitchens"])
-    bathrooms = float(request.form["bathrooms"])
-    area = float(request.form["area"])
-    furnished = 1 if request.form["furnished"] == "yes" else 0
-    location = float(request.form["location"])
-    parking = float(request.form["parking"])
+    try:
+        bedrooms = float(request.form.get("bedrooms", 0))
+        kitchens = float(request.form.get("kitchens", 0))
+        bathrooms = float(request.form.get("bathrooms", 0))
+        area = float(request.form.get("area", 0))
+        furnished = 1 if request.form.get("furnished") == "yes" else 0
+        location = float(request.form.get("location", 0))
+        parking = float(request.form.get("parking", 0))
 
-    # Convert inputs into numeric array (8 features)
-    features = np.array([[bedrooms, kitchens, bathrooms,
-                           area / 1000,
-                           furnished, location,
-                           parking, 1.0]])
+        # Always create EXACT 2D array
+        features = np.array([
+            bedrooms,
+            kitchens,
+            bathrooms,
+            area / 1000,
+            furnished,
+            location,
+            parking,
+            1.0
+        ]).reshape(1, -1)
+
+        prediction = model.predict(features)[0]
+
+        return render_template(
+            "index.html",
+            prediction_text=f"Estimated House Price: ₹ {prediction * 100000:.2f}"
+        )
+
+    except Exception as e:
+        return render_template(
+            "index.html",
+            prediction_text=f"Error occurred: {str(e)}"
+        )
+
 
     scaled_data = scaler.transform(features)
     prediction = model.predict(scaled_data)[0]
