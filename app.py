@@ -5,11 +5,11 @@ import numpy as np
 app = Flask(__name__)
 
 model = pickle.load(open("linear_regression_model.pkl", "rb"))
-scaler = pickle.load(open("scaler.pkl", "rb"))
 
 @app.route("/")
 def home():
     return render_template("index.html")
+
 
 @app.route("/predict", methods=["POST"])
 def predict():
@@ -22,19 +22,16 @@ def predict():
         location = float(request.form.get("location", 0))
         parking = float(request.form.get("parking", 0))
 
- features = np.array([
-    bedrooms,
-    kitchens,
-    bathrooms,
-    area / 1000,
-    furnished,
-    location,
-    parking,
-
-    # Dummy features to satisfy model
-    0, 0, 0, 0, 0, 0
-]).reshape(1, -1)
-
+        features = np.array([
+            bedrooms,
+            kitchens,
+            bathrooms,
+            area / 1000,
+            furnished,
+            location,
+            parking,
+            0, 0, 0, 0, 0, 0
+        ]).reshape(1, -1)
 
         prediction = model.predict(features)[0]
 
@@ -49,29 +46,8 @@ def predict():
             prediction_text=f"Error occurred: {str(e)}"
         )
 
-        prediction = model.predict(features)[0]
-
-        return render_template(
-            "index.html",
-            prediction_text=f"Estimated House Price: ₹ {prediction * 100000:.2f}"
-        )
-
-    except Exception as e:
-        return render_template(
-            "index.html",
-            prediction_text=f"Error occurred: {str(e)}"
-        )
-
-
-    scaled_data = scaler.transform(features)
-    prediction = model.predict(scaled_data)[0]
-
-    return render_template(
-        "index.html",
-        prediction_text=f"Estimated House Price: ₹ {prediction * 100000:.2f}"
-    )
 
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=5000)
+    app.run(debug=True)
 
 
