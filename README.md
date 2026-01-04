@@ -147,6 +147,9 @@ InconsistentVersionWarning (scikit-learn)
 This is a **documented and non-fatal warning**.
 
 ---
+### Demo UI Note
+The web interface is designed for demonstration purposes to showcase the complete ML deployment workflow. Input variables are mapped internally to match the trained model’s feature requirements.
+
 
 ## 🔁 Comparison with Reference Tutorial
 
@@ -179,7 +182,6 @@ This is a **documented and non-fatal warning**.
 
 ## 📌 Future Enhancements (Optional)
 
-* Add HTML UI for user input
 * Improve error handling
 * Add API documentation (Swagger)
 * Add CI/CD pipeline
